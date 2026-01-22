@@ -1,0 +1,6 @@
+gradio
+Pillow
+requests
+python-dotenv
+langgraph
+chainlit
