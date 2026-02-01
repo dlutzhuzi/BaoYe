@@ -1,0 +1,69 @@
+{
+  "root": {
+    "prompt": "你是施工用电安全规范检查专家，请你仅返回图片中存在的以下元素名称（用英文逗号分隔，无则返回无）：[配电箱,电缆铺设]",
+    "child_map": {
+      "电缆铺设": "cable_lay",
+      "配电箱": "distribution_box"
+    },
+    "context":"none"
+  },
+  "cable_lay": {
+    "prompt": "判断图中电缆铺设的方式，仅返回对应数字（1/2/3/4）：1.直接沿地面铺设 2.架空电缆，架空敷设不一定完全架空，可以有部分电缆触地，如果图片中有支架或者A字架之类的物体支持电缆，则属于架空敷设 3.埋地电缆，通过埋地方式引入 4.垂直电缆，利用在建工程的竖井/垂直孔洞敷设电缆",
+    "child_map": {
+      "1": "cable_ground",
+      "2": "cable_air",
+      "3": "cable_buried",
+      "4": "cable_vertical"
+    },
+    "context":"parent"
+  },
+  "cable_ground": {
+    "prompt": "",
+    "child_map": {},
+    "risk": "电缆沿地面明设，易受机械损伤、介质腐蚀，存在触电和线路损坏风险",
+    "rectify": "电缆线路必须采用埋地或架空敷设，严禁沿地面明设；若临时敷设需加设绝缘保护套管，做好防碾压措施",
+    "context":"none"
+  },
+  "cable_air": {
+    "prompt": "根据以下规则判断架空电缆敷设是否合规，仅返回「合规」或「不合规」：架空电缆严禁沿脚手架、树木敷设。架空电缆应沿电杆/支架/墙壁敷设，固定点间距能承受电缆自重荷载；沿墙壁敷设时最大弧垂距地≥2.0m。",
+    "child_map": {
+      "不合规": "cable_air_illegal"
+    },
+    "context":"all"
+  },
+  "cable_air_illegal": {
+    "prompt": "",
+    "child_map": {},
+    "risk": "架空电缆敷设不符合规范，易因外力拉扯、接触易燃物引发触电、火灾事故",
+    "rectify": "立即拆除沿脚手架/树木敷设的电缆，改沿专用电杆/支架/墙壁敷设；调整固定点间距，沿墙壁敷设的电缆保证弧垂距地≥2.0m，做好固定和绝缘防护",
+    "context":"none"
+  },
+  "cable_buried": {
+    "prompt": "",
+    "child_map": {},
+    "risk": "",
+    "rectify": "",
+    "context":"none"
+  },
+  "cable_vertical": {
+    "prompt": "",
+    "child_map": {},
+    "risk": "",
+    "rectify": "",
+    "context":"none"
+  },
+  "distribution_box": {
+    "prompt": "你是施工用电安全规范检查专家，判断图中配电箱是否符合以下核心要求，仅返回「合规」或「不合规」：1.配电箱设置门锁并处于关闭状态 2.配电箱有防雨、防砸防护措施 3.配电箱旁无堆放易燃易爆、杂物",
+    "child_map": {
+      "不合规": "box_illegal"
+    },
+    "context":"parent"
+  },
+  "box_illegal": {
+    "prompt": "",
+    "child_map": {},
+    "risk": "配电箱防护措施不到位，易受雨水侵入、外力损坏或人为误触，引发短路、触电事故",
+    "rectify": "为配电箱加装专用门锁并保持关闭；设置防雨防砸防护棚，保证防护距离；及时清理配电箱周边易燃易爆物品和杂物，保持作业环境整洁",
+    "context":"none"
+  }
+}

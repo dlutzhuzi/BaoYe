@@ -1,6 +1,6 @@
-gradio
+
 Pillow
 requests
-python-dotenv
+dotenv
 langgraph
 chainlit
